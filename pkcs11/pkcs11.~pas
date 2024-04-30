@@ -1,0 +1,227 @@
+unit pkcs11;
+//-------------------------------------------------------------------
+//Coypright (c) 2009,Feitian Technologies Co., Ltd.
+//All rights reserved
+//Description: Cryptoki function prototypes and variables definition
+//Created Time:20090625
+//Author:Allen of ITD
+//-------------------------------------------------------------------
+
+interface
+const
+  CKR_OK = 0;
+  CKR_DEVICE_ERROR = 48;
+  CKR_TOKEN_NOT_PRESENT =342;
+  CKR_FUNCTION_FAILED=6;
+  
+  CKF_RW_SESSION = $2;
+  CKF_SERIAL_SESSION = $4;
+
+  CKO_PUBLIC_KEY =$2;
+  CKO_PRIVATE_KEY = $3;
+  CKO_SECRET_KEY = $4;
+
+  CKA_CLASS = $0;
+  CKA_TOKEN =$1;
+  CKA_PRIVATE = $2;
+  CKA_KEY_TYPE = $100;
+  CKA_SUBJECT =  $101;
+  CKA_SENSITIVE = $103;
+  CKA_ENCRYPT = $104;
+  CKA_DECRYPT = $105;
+  CKA_WRAP = $106;
+  CKA_UNWRAP = $107;
+  CKA_MODULUS_BITS = $121;
+  CKA_VALUE_LEN =$161;
+  CKA_EXTRACTABLE = $162;
+
+  CKK_RSA = $0;
+  CKK_RC2 = $11;
+  CKK_RC4 = $12;
+  CKK_DES3= $15;
+
+  CKM_RSA_PKCS = $1;
+  CKM_RSA_PKCS_KEY_PAIR_GEN = $0;
+
+  CKM_DES_KEY_GEN =$120;
+  CKM_DES_ECB=$121;
+  CKM_DES_CBC=$122;
+  CKM_DES_CBC_PAD=$125;
+
+  CKM_DES3_KEY_GEN=$131;
+  CKM_DES3_ECB=$132;
+  CKM_DES3_CBC=$133;
+  CKM_DES3_MAC=$134;
+  CKM_DES3_CBC_PAD=$136;
+
+  CKM_RC2_KEY_GEN=$100;
+  CKM_RC2_ECB=$101;
+  CKM_RC2_CBC=$102;
+  CKM_RC2_MAC=$103;
+  CKM_RC2_CBC_PAD=$105;
+
+  CKM_RC4_KEY_GEN=$110;
+  CKM_RC4=$111;
+
+  CKM_VENDOR_DEFINED=$80000000;
+  CKK_SCB2=CKM_VENDOR_DEFINED+40;
+  CKM_SCB2_KEY_GEN=CKM_VENDOR_DEFINED+41;
+  CKM_SCB2_CBC=CKM_VENDOR_DEFINED + 42;
+  CKM_SCB2_ECB=CKM_VENDOR_DEFINED + 43;
+  CKM_SCB2_CBC_PAD=CKM_VENDOR_DEFINED + 44;
+
+  CKK_SSF33=CKM_VENDOR_DEFINED+33;
+  CKM_SSF33_KEY_GEN=CKM_VENDOR_DEFINED+33;
+  CKM_SSF33_CBC=CKM_VENDOR_DEFINED+35;
+  CKM_SSF33_ECB=CKM_VENDOR_DEFINED+36;
+  CKM_SSF33_CBC_PAD=CKM_VENDOR_DEFINED+37;
+
+  
+type
+
+  CK_BYTE = byte;
+  CK_UTF8CHAR=byte;
+  CK_CHAR=byte;
+  CK_FLAGS=longint;
+  CK_BBOOL=byte;
+  CK_ULONG=longword;
+  CK_RV=longword;
+  CK_SLOT_ID=longword;
+  CK_SLOT_ID_PTR=^CK_SLOT_ID;
+  CK_ULONG_PTR=^CK_ULONG;
+  CK_OBJECT_HANDLE=longword;
+  CK_OBJECT_CLASS=longword;
+  CK_OBJECT_HANDLE_PTR=^CK_OBJECT_HANDLE;
+  CK_SESSION_HANDLE=longword;
+  CK_UTF8CHAR_PTR=^CK_UTF8CHAR;
+  CK_BYTE_PTR=^CK_BYTE;
+  CK_KEY_TYPE=CK_ULONG;
+
+
+
+  CK_ATTRIBUTE =record
+    attrtype:longword;
+    pValue:pointer;
+    ulValueLen:longword;
+  end;
+
+  CK_ATTRIBUTE_PTR=^CK_ATTRIBUTE;
+
+  CK_VERSION = record
+    major:CK_BYTE;
+    minor:CK_BYTE;
+  end;
+  CK_SLOT_INFO = record
+    slotDescription: array[0..63]of byte;
+    manufacturerID: array[0..31] of byte;
+    flags:longword;
+    hardwareVersion:CK_VERSION;
+    firmwareVersion:CK_VERSION;
+  end;
+
+  CK_SLOT_INFO_PTR=^CK_SLOT_INFO;
+    
+  CK_TOKEN_INFO=record
+    token_label:array[0..31] of CK_UTF8CHAR;
+    manufacturerID:array[0..31] of CK_UTF8CHAR;
+    model:array[0..15] of CK_UTF8CHAR;
+    serialNumber:array[0..15] of CK_CHAR;
+    flags:CK_FLAGS;
+    ulMaxSessionCount:CK_ULONG;
+    ulSessionCount:CK_ULONG;
+    ulMaxRwSessionCount:CK_ULONG;
+    ulRwSessionCount:CK_ULONG;
+    ulMaxPinLen:CK_ULONG;
+    ulMinPinLen:   CK_ULONG;
+    ulTotalPublicMemory: CK_ULONG;
+    ulFreePublicMemory:CK_ULONG;
+    ulTotalPrivateMemory:CK_ULONG ;
+    ulFreePrivateMemory:CK_ULONG;
+    hardwareVersion:CK_VERSION;
+    firmwareVersion:CK_VERSION;
+    utcTime:array[0..15] of CK_CHAR;
+  end;
+
+  CK_TOKEN_INFO_PTR=^CK_TOKEN_INFO;
+
+    
+  CK_INFO=record
+    cryptokiVersion:CK_VERSION;                     //Cryptoki interface ver *
+    manufacturerID:array[0..31] of CK_UTF8CHAR;     //blank padded
+    flags:array[0..3] of char;                      //must be zero
+    libraryDescription:array[0..31] of CK_UTF8CHAR; //blank padded
+    libraryVersion:CK_VERSION;                      //version of library
+  end;
+  CK_INFO_PTR=^CK_INFO;
+
+  //CK_MECHANISM is a structure that specifies a particular mechanism
+  CK_MECHANISM=record
+    mechanism:CK_ULONG;
+    pParameter:pointer;
+    //ulParameterLen was changed from CK_USHORT to CK_ULONG for v2.0
+    ulParameterLen:CK_ULONG;
+  end;
+  CK_MECHANISM_PTR=^CK_MECHANISM;
+
+  CK_RC2_CBC_PARAMS=record
+    ulEffectiveBits:CK_ULONG;
+    iv:array[0..7] of CK_BYTE;
+  end;
+  CK_RC2_CBC_PARAMS_PTR=^CK_RC2_CBC_PARAMS;
+
+ // function C_GenerateKey(hSession:longword; pMechanism: CK_MECHANISM_PTR; pTemplate:CK_ATTRIBUTE_PTR; ulCount: CK_ULONG;phKey:CK_OBJECT_HANDLE_PTR):longword; cdecl;external 'ShuttleCsp11_3003.dll'
+var
+  //initializes the Cryptoki library .
+  C_Initialize:function(pInitArgs: longword):CK_RV; cdecl;
+  //C_Finalize indicates that an application is done with the Cryptoki library.
+  C_Finalize:function(pReserved: longword):CK_RV; cdecl;
+  //returns general information about Cryptoki.
+  C_GetInfo:function(pInfo:CK_INFO_PTR):CK_RV;cdecl;
+  //C_GetSlotList obtains a list of slots in the system .
+  C_GetSlotList:function(tokenPresent: byte; pSlotList :pointer;VAR pulCount:longword):CK_RV;cdecl;
+  //C_GetSlotInfo obtains information about a particular slot in the system.
+  C_GetSlotInfo:function(slotID: longword;pInfo :CK_SLOT_INFO_PTR):CK_RV; cdecl;
+  //obtains information about a particular token in the system.
+  C_GetTokenInfo:function(slotID:CK_SLOT_ID; pInfo:CK_TOKEN_INFO_PTR):CK_RV; cdecl;
+  //open a session between an application and a token.
+  C_OpenSession:function(slotID ,flags,pApplication,Notify: longword;VAR phSession:longword):CK_RV;cdecl;
+  //closes a session between an application and a token.
+  C_CloseSession:function(hSession:longword):CK_RV;cdecl;
+  //
+  C_GenerateKeyPair:function(hSession:CK_SESSION_HANDLE;pMechanism:CK_MECHANISM_PTR;pPublicKeyTemplate:CK_ATTRIBUTE_PTR;ulPublicKeyAttributeCount:CK_ULONG;
+                             pPrivateKeyTemplate:CK_ATTRIBUTE_PTR;ulPrivateKeyAttributeCount:CK_ULONG;phPublicKey:CK_OBJECT_HANDLE_PTR;phPrivateKey:CK_OBJECT_HANDLE_PTR):CK_RV;cdecl;
+  //destroy an object
+  C_DestroyObject:function(hSession:CK_SESSION_HANDLE; hObject:CK_OBJECT_HANDLE):CK_RV;cdecl;
+  //
+  C_SignInit:function(hSession:CK_SESSION_HANDLE;  pMechanism:CK_MECHANISM_PTR;hKey:CK_OBJECT_HANDLE):CK_RV;cdecl;
+  //
+  C_Sign:function(hSession:CK_SESSION_HANDLE; pData:CK_BYTE_PTR;ulDataLen:CK_ULONG; pSignature:CK_BYTE_PTR;pulSignatureLen:CK_ULONG_PTR):CK_RV;cdecl;
+  C_VerifyInit:function(hSession:CK_SESSION_HANDLE;  pMechanism:CK_MECHANISM_PTR; hKey:CK_OBJECT_HANDLE):CK_RV;cdecl;
+  C_Verify:function(hSession:CK_SESSION_HANDLE;  pData:CK_BYTE_PTR;  ulDataLen:CK_ULONG;  pSignature:CK_BYTE_PTR; ulSignatureLen:CK_ULONG):CK_RV;cdecl;
+  //
+  C_Login:function(phSession:CK_SESSION_HANDLE;userType:longword;pPin:pChar;ulPinLen:longword):CK_RV; cdecl;
+  //C_GenerateKey generates a secret key, creating a new key object
+  C_GenerateKey:function(hSession:longword; pMechanism: CK_MECHANISM_PTR; pTemplate:CK_ATTRIBUTE_PTR; ulCount: CK_ULONG;phKey:CK_OBJECT_HANDLE_PTR):CK_RV;cdecl;
+  //initializes an encryption operation
+  C_EncryptInit:function(hSession:longword; pMechanism:CK_MECHANISM_PTR; hKey:CK_OBJECT_HANDLE):CK_RV;cdecl;
+  //initializes a decryption operation.
+  C_DecryptInit:function(hSession:longword; pMechanism:CK_MECHANISM_PTR; hKey:CK_OBJECT_HANDLE):CK_RV;cdecl;
+  //encrypts single-part data.
+  C_Encrypt:function(hSession:longword; pData:CK_BYTE_PTR; ulDataLen:CK_ULONG; pEncryptedData:CK_BYTE_PTR; pulEncryptedDataLen:CK_ULONG_PTR):CK_RV;cdecl;
+  //decrypts single-part data.
+  C_Decrypt:function(hSession:longword;pEncryptedData:CK_BYTE_PTR;ulEncryptedDataLen:CK_ULONG;pData:CK_BYTE_PTR; pulDataLen:CK_ULONG_PTR):CK_RV;cdecl;
+  //continues a multiple-part encryption operation.
+  C_EncryptUpdate:function(hSession:longword; pPart:CK_BYTE_PTR; ulPartLen:CK_ULONG;pEncryptedPart:CK_BYTE_PTR;pulEncryptedPartLen:CK_ULONG_PTR):CK_RV;cdecl;
+  //continues a multiple-part decryption operation.
+  C_DecryptUpdate:function(hSession:longword; pEncryptedPart:CK_BYTE_PTR; ulEncryptedPartLen:CK_ULONG; pPart:CK_BYTE_PTR; pulPartLen:CK_ULONG_PTR):CK_RV;cdecl;
+  //finishes a multiple-part encryption operation
+  C_EncryptFinal:function(hSession:longword;pLastEncryptedPart:CK_BYTE_PTR; pulLastEncryptedPartLen:CK_ULONG_PTR):CK_RV;cdecl;
+  //finishes a multiple-part decryption operation
+  C_DecryptFinal:function(hSession:longword;pLastPart:CK_BYTE_PTR;pulLastPartLen:CK_ULONG_PTR):CK_RV;cdecl;
+
+//-----------------------------------------------------------------------
+
+
+implementation
+
+end.

@@ -1,0 +1,96 @@
+object FrmLogin: TFrmLogin
+  Left = 639
+  Top = 297
+  Width = 343
+  Height = 169
+  VertScrollBar.Range = 145
+  HorzScrollBar.Range = 321
+  ActiveControl = EditPin
+  BorderIcons = [biSystemMenu]
+  BorderStyle = fbsDialog
+  Caption = 'Input user pin'
+  Color = clBackground
+  Font.CharSet = fcsLatin1
+  Font.Color = clBlack
+  Font.Height = 13
+  Font.Name = 'Microsoft Sans Serif'
+  Font.Pitch = fpVariable
+  Font.Style = []
+  Font.Weight = 40
+  ParentFont = False
+  Position = poMainFormCenter
+  PixelsPerInch = 96
+  TextHeight = 16
+  TextWidth = 7
+  object EditPin: TEdit
+    Left = 128
+    Top = 72
+    Width = 193
+    Height = 22
+    EchoMode = emPassword
+    Font.CharSet = fcsLatin1
+    Font.Color = clBlack
+    Font.Height = 13
+    Font.Name = #21326#25991#23435#20307
+    Font.Pitch = fpVariable
+    Font.Style = []
+    Font.Weight = 40
+    MaxLength = 32
+    ParentFont = False
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 59
+    Top = 17
+    Width = 211
+    Height = 16
+    Caption = ' Please enter your User Pin to login:'
+    WordWrap = True
+  end
+  object ButtOk: TButton
+    Left = 144
+    Top = 120
+    Width = 75
+    Height = 25
+    Caption = 'OK'
+    Font.CharSet = fcsLatin1
+    Font.Color = clBlack
+    Font.Height = 13
+    Font.Name = 'Microsoft Sans Serif'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+    OnClick = ButtOkClick
+  end
+  object ButtCancel: TButton
+    Left = 240
+    Top = 120
+    Width = 75
+    Height = 25
+    Caption = 'Cancel'
+    Font.CharSet = fcsLatin1
+    Font.Color = clBlack
+    Font.Height = 13
+    Font.Name = 'Microsoft Sans Serif'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+    OnClick = ButtCancelClick
+  end
+  object Label2: TLabel
+    Left = 53
+    Top = 77
+    Width = 63
+    Height = 16
+    Caption = 'User Pin:'
+    Font.CharSet = fcsLatin1
+    Font.Color = clBlack
+    Font.Height = 13
+    Font.Name = 'Microsoft Sans Serif'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+end
