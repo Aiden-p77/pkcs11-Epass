@@ -12,7 +12,6 @@ By connecting the hardware token to the computer, the token software can be open
    - Download the project file and open it in Delphi IDE.
    
 2. Usage:
-   - Import your pictures into the program.
    - Epass(3000 or 3003) hardware token.
    
 ## Requirements
