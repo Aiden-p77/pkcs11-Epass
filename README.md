@@ -4,7 +4,7 @@ Connect to EPASS hardware token to get digital signature
 
 ## Description
 
-Detecting the difference between two images in Delphi. The error coefficient can also be determined.
+By connecting the hardware token to the computer, the token software can be opened and information can be extracted from it.
 
 ## Guide
 
