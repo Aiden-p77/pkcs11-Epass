@@ -1,6 +1,6 @@
-# Compare Image
+# pkcs11 EPass Token
 
-Connect to epass hardware token to get digital signature
+Connect to EPASS hardware token to get digital signature
 
 ## Description
 
